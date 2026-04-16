@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowSign - Perfil</title>
+    <link rel="icon" href="/static/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        .banner-container {
+            width: 100%;
+            height: 35vh;
+            position: relative;
+            background-color: var(--secondary-color);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .main-profile-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .avatar-container {
+            width: 140px;
+            height: 140px;
+            margin: -70px auto 10px auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid var(--bg-color);
+            background-color: var(--card-bg);
+            object-fit: cover;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .profile-info {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .edit-icon {
+            cursor: pointer;
+            color: var(--primary-color);
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .wall-section {
+            margin-top: 3rem;
+        }
+
+        .comment-box {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .post-input {
+            width: 100%;
+            border: 2px solid #ffe4cc;
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: inherit;
+        }
+
+        .upload-input-hidden {
+            display: none;
+        }
+
+        /* Search Bar & Social */
+        .search-bar {
+            position: relative;
+            width: 300px;
+            margin: 0 1rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #ffe4cc;
+            outline: none;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: var(--shadow-md);
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+        }
+
+        .search-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-item:hover {
+            background: #ffe4cc;
+        }
+
+        .search-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .follow-btn {
+            margin-top: 10px;
+            padding: 5px 20px;
+        }
+
+        .react-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .react-btn.reacted {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/perfil" class="navbar-brand">
+            <img src="/static/img/black_crow.png" alt="CrowSign Logo"> CrowSign
+        </a>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar usuarios..." onkeyup="searchUsers()">
+            <div class="search-results" id="search-results"></div>
+        </div>
+        <div class="nav-links">
+            <a href="/chat" class="btn btn-primary">Entrar a Cámara</a>
+            <button onclick="logout()" class="btn btn-outline">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <div class="banner-container" id="banner-img" style="background-image: linear-gradient(135deg, #ff8c00, #ff6b00);">
+        <div id="banner-edit-wrapper">
+            <label for="banner-upload" class="edit-btn-overlay"
+                style="top: 10px; bottom: auto; right: 20px; font-size: 1rem;">📷 Editar Portada</label>
+            <input type="file" id="banner-upload" class="upload-input-hidden" accept="image/*"
+                onchange="uploadImage(event, 'banner')">
+        </div>
+    </div>
+
+    <div class="main-profile-content container">
+        <div class="avatar-container">
+            <img src="/static/img/black_crow.png" alt="Avatar" class="avatar" id="profile-avatar">
+            <div id="avatar-edit-wrapper">
+                <label for="avatar-upload" class="edit-btn-overlay">📷</label>
+                <input type="file" id="avatar-upload" class="upload-input-hidden" accept="image/*"
+                    onchange="uploadImage(event, 'avatar')">
+            </div>
+        </div>
+
+        <div class="profile-info">
+            <h2 id="profile-name">Cargando...</h2>
+            <div id="follow-container" style="display:none;">
+                <button id="follow-action-btn" class="btn btn-primary follow-btn"
+                    onclick="toggleFollow()">Seguir</button>
+            </div>
+
+            <div class="tiktok-badges-container">
+                <div class="tiktok-badge">📍 <b id="profile-country">No especificado</b> <span
+                        class="edit-icon control-me" onclick="openModal('country', 'Tu País (Ej. México)')">✏️</span>
+                </div>
+                <div class="tiktok-badge">🪪 <b id="profile-identity">No especificado</b> <span
+                        class="edit-icon control-me" onclick="openModal('identity', 'Identidad (Ej. Mujer)')">✏️</span>
+                </div>
+                <div class="tiktok-badge">🎂 <b id="profile-age">No especificada</b> <span class="edit-icon control-me"
+                        onclick="openModal('age', 'Edad (Solo Números)')">✏️</span></div>
+            </div>
+
+            <div class="tiktok-bio">
+                <span id="profile-bio">Sin descripción</span>
+                <span class="edit-icon control-me"
+                    onclick="openModal('bio', 'Cuéntanos un poco sobre ti y modifica tu biografía TikTok style')">✏️</span>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="followers-count">0</div>
+                    <div class="stat-label">Seguidores</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="following-count">0</div>
+                    <div class="stat-label">Siguiendo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="wall-section">
+            <h3
+                style="border-bottom: 2px solid var(--primary-color); display: inline-block; padding-bottom: 5px; margin-bottom: 1rem;">
+                Muro de Comentarios</h3>
+            <div id="comment-form-container">
+                <textarea class="post-input" id="new-comment" rows="3"
+                    placeholder="Escribe un comentario amigable..."></textarea>
+                <button class="btn btn-primary" onclick="postComment()">Dejar Comentario</button>
+            </div>
+            <div id="comments-list" style="margin-top: 2rem;"></div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <div class="modal-overlay" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Editar</h3>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="form-group">
+                <input type="text" id="modal-input" class="form-control" autocomplete="off">
+            </div>
+            <button class="btn btn-primary w-100" onclick="saveModalEdit()">Guardar Cambios</button>
+        </div>
+    </div>
+
+    <script src="/static/js/profile.js"></script>
+</body>
+
+</html>

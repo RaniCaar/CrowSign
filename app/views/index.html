@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowSign - Lector de Señas </title>
+    <link rel="icon" href="/static/img/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+
+    <div class="split-layout">
+        <div class="split-left">
+            <h1 class="auth-title">Bienvenido a CrowSign</h1>
+            <p class="auth-subtitle">Aprende, comunícate y diviértete con la magia del lenguaje de señas en tiempo real.
+            </p>
+            <img src="/static/img/black_crow.jpg" alt="Mascota Cuervo Negro" class="mascot-lg">
+        </div>
+
+        <div class="split-right">
+            <div class="card auth-form-container">
+                <!-- LOGIN FORM -->
+                <form id="login-form">
+                    <h2 class="mb-4 text-center">Iniciar Sesión</h2>
+                    <div id="login-error" class="d-none" style="color: red; text-align: center; margin-bottom: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-pass" class="form-control" placeholder="********" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+
+                    <div class="toggle-form">
+                        ¿No tienes cuenta? <a href="#" onclick="toggleForms(event)">Regístrate</a>
+                    </div>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="register-form" class="d-none">
+                    <h2 class="mb-4 text-center">Regístrate</h2>
+                    <div id="reg-error" class="d-none" style="color: red; text-align: center; margin-bottom: 10px;">
+                    </div>
+                    <div id="reg-success" class="d-none" style="color: green; text-align: center; margin-bottom: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre de Usuario</label>
+                        <input type="text" id="reg-user" class="form-control" placeholder="Usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo</label>
+                        <input type="email" id="reg-email" class="form-control" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="reg-pass" class="form-control" placeholder="********" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Crear Cuenta</button>
+
+                    <div class="toggle-form">
+                        ¿Ya tienes cuenta? <a href="#" onclick="toggleForms(event)">Inicia Sesión</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/auth.js"></script>
+</body>
+
+</html>

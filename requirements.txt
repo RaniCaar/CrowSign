@@ -1,0 +1,10 @@
+opencv-python>=4.8.0
+mediapipe==0.10.5
+flask
+flask-cors
+Flask-SQLAlchemy
+pyodbc
+flask-socketio
+eventlet
+SQLAlchemy
+werkzeug
