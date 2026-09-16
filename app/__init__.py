@@ -11,14 +11,13 @@ def create_app():
     # Establecer la ubicación estática y de plantillas
     frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'views'))
     static_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), 'static'))
-    
+
     flask_app = Flask(__name__, template_folder=frontend_dir, static_folder=static_dir)
-    flask_app.config['SECRET_KEY'] = 'crowsign-secret-pass'
-    
-    # Configurar SQL Server SQLite por ahora en caso de no tener conexion lista
-    # Idealmente se cambiará por la cadena de conexión de SQL Server: 
-    # 'mssql+pyodbc://user:pass@server/database?driver=ODBC+Driver+17+for+SQL+Server'
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///crowsign.db'
+    flask_app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'crowsign-dev-secret')
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+        'SQLALCHEMY_DATABASE_URI',
+        'sqlite:///' + os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'instance', 'crowsign.db')
+    )
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     CORS(flask_app)
